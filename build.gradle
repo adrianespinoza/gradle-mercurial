@@ -1,0 +1,11 @@
+apply plugin: 'java'
+
+task versionInfo(type:Exec){
+    commandLine 'hg id -i -b -t'.split()
+    ext.versionfile = new File('bin/$baseName-buildinfo.properties')
+    standardOutput = new ByteArrayOutputStream()
+
+    doLast {
+        versionfile.text = 'build.revision=' + standardOutput.toString()
+    }
+}
